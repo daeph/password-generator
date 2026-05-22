@@ -1,15 +1,17 @@
-# Aktualisierte Version mit v4/v5 Actions
 name: Check Code Quality with flake8
 
 on: [push, pull_request]
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true  # ✅ Erzwingt Node.js 24 für alle Actions
 
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4  # ✅ Aktuelle Version (v4 statt v3)
+      - uses: actions/checkout@v4
       - name: Set up Python
-        uses: actions/setup-python@v5  # ✅ Aktuelle Version (v5 statt v4)
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
       - name: Install flake8
