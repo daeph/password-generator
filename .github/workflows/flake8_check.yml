@@ -4,17 +4,21 @@ on: [push, pull_request]
 
 jobs:
   lint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04  # Ubuntu 22.04 mit Node.js 24
+
     steps:
-      - name: Force Node.js 24 for Actions
-        run: |
-          echo "FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true" >> $GITHUB_ENV
-      - uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Checkout repository
+        uses: actions/checkout@v4  # Aktuelle Version (Node.js 24 kompatibel)
+        with:
+          fetch-depth: 0  # WICHTIG: Lädt den gesamten Git-History
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5  # Aktuelle Version
         with:
           python-version: '3.11'
+
       - name: Install flake8
         run: pip install flake8
+
       - name: Run flake8
-        run: flake8 .
+        run: flake8 --max-line-length=88 .
